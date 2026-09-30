@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="id" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portofolio MT Otomasi | Jurnal Proyek</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', "sans-serif"],
+              display: ['"Space Grotesk"', "sans-serif"],
+            },
+            colors: { darkBg: "#030014" },
+            backgroundImage: {
+              "cosmic-gradient":
+                "linear-gradient(to right,#8b5cf6,#d946ef,#06b6d4)",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background: #030014;
+        color: #fff;
+        overflow-x: hidden;
+      }
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #030014;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #4b5563;
+        border-radius: 10px;
+      }
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        scrollbar-width: none;
+      }
+      .aurora-bg {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        z-index: -1;
+        background: #030014;
+      }
+      .aurora-blob {
+        position: absolute;
+        filter: blur(80px);
+        opacity: 0.4;
+        border-radius: 50%;
+        animation: float 20s infinite alternate ease-in-out;
+      }
+      .blob-1 {
+        top: -10%;
+        left: -10%;
+        width: 50vw;
+        height: 50vw;
+        background: #4c1d95;
+      }
+      .blob-2 {
+        bottom: -20%;
+        right: -10%;
+        width: 60vw;
+        height: 60vw;
+        background: #0891b2;
+        animation-delay: -5s;
+      }
+      .blob-3 {
+        top: 40%;
+        left: 30%;
+        width: 40vw;
+        height: 40vw;
+        background: #86198f;
+        animation-delay: -10s;
+      }
+      @keyframes float {
+        0% {
+          transform: translate(0, 0) scale(1);
+        }
+        50% {
+          transform: translate(5%, 10%) scale(1.1);
+        }
+        100% {
+          transform: translate(-5%, -5%) scale(0.9);
+        }
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 1.5rem;
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: none;
+      }
+      .img-wrapper img {
+        transition: transform 0.5s;
+      }
+      .img-wrapper:hover img {
+        transform: scale(1.05);
+      }
+      .inp {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+        color: #fff;
+      }
+      .inp option {
+        background: #0a0a1a;
+      }
+      .btn {
+        padding: 0.5rem 1rem;
+        border-radius: 0.75rem;
+        font-size: 0.8rem;
+        font-family: "Space Grotesk";
+        background: linear-gradient(to right, #8b5cf6, #d946ef);
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body class="antialiased selection:bg-fuchsia-500">
+    <div class="aurora-bg">
+      <div class="aurora-blob blob-1"></div>
+      <div class="aurora-blob blob-2"></div>
+      <div class="aurora-blob blob-3"></div>
+    </div>
+
+    <header
+      class="relative min-h-[80vh] flex flex-col justify-center px-6 md:px-12 lg:px-24"
+    >
+      <div class="max-w-7xl mx-auto w-full">
+        <div
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-8"
+        >
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span
+          ><span
+            class="font-display text-xs text-gray-300 tracking-widest uppercase"
+            >Jurnal MT 2026</span
+          >
+        </div>
+        <h1
+          class="font-display text-5xl sm:text-7xl lg:text-[7rem] font-bold leading-[1.1] tracking-tighter mb-6"
+        >
+          Automating The <br /><span
+            class="text-transparent bg-clip-text bg-cosmic-gradient"
+            >Future Industry.</span
+          >
+        </h1>
+        <p class="text-lg sm:text-xl text-gray-400 font-light max-w-2xl mb-12">
+          Portofolio ini mencatat perjalanan saya sebagai
+          <strong class="text-white font-medium"
+            >MT Programmer Automation</strong
+          >, dari audit hardware hingga deployment.
+        </p>
+        <a
+          href="#timeline"
+          class="font-display text-sm uppercase tracking-widest hover:text-cyan-400"
+          >Mulai Eksplorasi ↓</a
+        >
+      </div>
+    </header>
+
+    <main
+      id="timeline"
+      class="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 pb-32"
+    >
+      <div
+        class="absolute left-6 sm:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-fuchsia-500/30 to-transparent md:hidden"
+      ></div>
+      <div id="list"></div>
+    </main>
+
+    <footer class="py-12 border-t border-white/5 text-center">
+      <h2 class="font-display font-bold text-2xl mb-2">END OF PROGRAM.</h2>
+      <p class="text-xs text-gray-500 tracking-widest uppercase">
+        MT Automation Documentation &copy; 2026
+      </p>
+      <button
+        id="btnLogin"
+        onclick="showM('loginModal')"
+        class="mt-6 text-xs text-gray-600 hover:text-gray-300"
+      >
+        Admin
+      </button>
+    </footer>
+
+    <div id="adminBar" class="hidden fixed bottom-5 right-5 z-50 flex gap-2">
+      <button class="btn" onclick="openForm()">+ Tambah Kegiatan</button>
+      <button class="btn !bg-none !bg-white/10" onclick="db.auth.signOut()">
+        Keluar
+      </button>
+    </div>
+
+    <div
+      id="imageModal"
+      class="fixed inset-0 z-[100] hidden flex-col items-center justify-center p-4 opacity-0 transition-opacity duration-300 bg-darkBg/90 backdrop-blur-lg"
+      onclick="hideM('imageModal')"
+    >
+      <img
+        id="modalImage"
+        class="max-w-full max-h-[75vh] object-contain rounded-lg glass-card p-2"
+      />
+      <p id="modalCaption" class="mt-6 text-center max-w-2xl"></p>
+    </div>
+
+    <div
+      id="loginModal"
+      class="fixed inset-0 z-[100] hidden items-center justify-center p-4 opacity-0 transition-opacity duration-300 bg-darkBg/90 backdrop-blur-lg"
+    >
+      <form id="loginForm" class="glass-card p-6 w-full max-w-sm space-y-3">
+        <h3 class="font-display text-xl font-bold">Login Admin</h3>
+        <input
+          id="lEmail"
+          type="email"
+          placeholder="Email"
+          class="inp"
+          required
+        />
+        <input
+          id="lPass"
+          type="password"
+          placeholder="Password"
+          class="inp"
+          required
+        />
+        <p id="lMsg" class="text-xs text-red-400"></p>
+        <div class="flex gap-2">
+          <button class="btn">Masuk</button
+          ><button
+            type="button"
+            class="btn !bg-none !bg-white/10"
+            onclick="hideM('loginModal')"
+          >
+            Batal
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div
+      id="formModal"
+      class="fixed inset-0 z-[100] hidden items-start justify-center p-4 overflow-y-auto opacity-0 transition-opacity duration-300 bg-darkBg/90 backdrop-blur-lg"
+    >
+      <form id="kForm" class="glass-card p-6 w-full max-w-xl space-y-3 my-8">
+        <h3 class="font-display text-xl font-bold">Kegiatan</h3>
+        <label class="text-xs text-gray-400">Bulan</label
+        ><input id="fBulan" type="month" class="inp" required />
+        <input
+          id="fJudul"
+          placeholder="Apa yang dikerjakan (judul)"
+          class="inp"
+          required
+        />
+        <textarea
+          id="fDesk"
+          rows="5"
+          placeholder="Deskripsi pekerjaan"
+          class="inp"
+        ></textarea>
+        <input
+          id="fTags"
+          placeholder="Tag, pisahkan dengan koma (Python, PLC, ...)"
+          class="inp"
+        />
+        <div class="text-xs text-gray-400 pt-2">Dokumentasi</div>
+        <div id="fDocs" class="space-y-2"></div>
+        <input
+          id="fFiles"
+          type="file"
+          accept="image/*"
+          multiple
+          class="text-xs text-gray-400"
+        />
+        <p id="fMsg" class="text-xs"></p>
+        <div class="flex gap-2">
+          <button id="fSave" class="btn">Simpan</button
+          ><button
+            type="button"
+            class="btn !bg-none !bg-white/10"
+            onclick="hideM('formModal')"
+          >
+            Batal
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      // ====== ISI 2 BARIS INI (dari Supabase → Project Settings → API) ======
+      const SUPABASE_URL = "ISI_URL_SUPABASE",
+        SUPABASE_KEY = "ISI_ANON_PUBLIC_KEY";
+      // ======================================================================
+      const READY = !SUPABASE_URL.startsWith("ISI"),
+        db = READY ? supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+      const $ = (id) => document.getElementById(id),
+        BLN = [
+          "Januari",
+          "Februari",
+          "Maret",
+          "April",
+          "Mei",
+          "Juni",
+          "Juli",
+          "Agustus",
+          "September",
+          "Oktober",
+          "November",
+          "Desember",
+        ];
+      const COL = ["#22d3ee", "#d946ef", "#8b5cf6", "#ffffff"],
+        JENIS = {
+          lapangan: "Foto Lapangan",
+          screenshot: "Screenshot Kode/Layar",
+        };
+      const esc = (s) =>
+        String(s ?? "").replace(
+          /[&<>"']/g,
+          (c) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[c],
+        );
+      let DATA = [],
+        admin = false,
+        editing = null,
+        FD = [],
+        removed = [];
+      const io = new IntersectionObserver(
+        (es) =>
+          es.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("active");
+              io.unobserve(e.target);
+            }
+          }),
+        { threshold: 0.1 },
+      );
+
+      function showM(id) {
+        const m = $(id);
+        m.classList.remove("hidden");
+        m.classList.add("flex");
+        requestAnimationFrame(() => m.classList.remove("opacity-0"));
+        document.body.style.overflow = "hidden";
+      }
+      function hideM(id) {
+        const m = $(id);
+        m.classList.add("opacity-0");
+        setTimeout(() => {
+          m.classList.add("hidden");
+          m.classList.remove("flex");
+          document.body.style.overflow = "";
+        }, 250);
+      }
+      function openDoc(id, j) {
+        const d = DATA.find((x) => x.id === id).dokumentasi[j];
+        $("modalImage").src = d.url;
+        $("modalCaption").textContent =
+          (d.caption ? d.caption + " · " : "") + JENIS[d.jenis];
+        showM("imageModal");
+      }
+
+      function card(k, i) {
+        const c = COL[i % 4],
+          flip = i % 2,
+          [y, m] = k.bulan.split("-"),
+          docs = k.dokumentasi || [];
+        return `<section class="relative flex flex-col md:grid md:grid-cols-12 gap-6 md:gap-16 mb-24 md:mb-40 pt-10">
+ <div class="absolute left-[-0.2rem] top-12 w-3 h-3 rounded-full md:hidden z-10" style="background:${c};box-shadow:0 0 12px ${c}"></div>
+ <div class="md:col-span-5 ${flip ? "md:order-last" : ""} pl-8 md:pl-0 relative z-10"><div class="md:sticky md:top-32 reveal"><div class="glass-card p-6 sm:p-8" style="border-top:2px solid ${c}80">
+  <div class="font-display text-sm tracking-[0.2em] uppercase font-bold mb-3" style="color:${c}">${BLN[+m - 1]} ${y}</div>
+  <h2 class="font-display text-3xl sm:text-4xl font-bold mb-4">${esc(k.judul)}</h2>
+  <p class="text-gray-400 text-sm sm:text-base leading-relaxed mb-6 whitespace-pre-line">${esc(k.deskripsi)}</p>
+  <div class="flex flex-wrap gap-2">${(k.tags || []).map((t) => `<span class="px-3 py-1 text-xs text-gray-300 bg-white/5 rounded-md border border-white/10">${esc(t)}</span>`).join("")}</div>
+  ${admin ? `<div class="flex gap-2 mt-6"><button class="btn" onclick="openForm('${k.id}')">Edit</button><button class="btn !bg-none !bg-red-500/30" onclick="del('${k.id}')">Hapus</button></div>` : ""}
+ </div></div></div>
+ <div class="md:col-span-7 pl-8 md:pl-0 flex overflow-x-auto md:overflow-x-visible md:flex-col gap-4 sm:gap-6 snap-x snap-mandatory hide-scrollbar reveal">
+ ${docs.map((d, j) => `<div class="min-w-[85%] sm:min-w-[70%] md:min-w-0 snap-center glass-card p-2 cursor-pointer" onclick="openDoc('${k.id}',${j})"><div class="img-wrapper overflow-hidden rounded-xl relative aspect-video bg-[#0a0a1a]"><img src="${esc(d.url)}" loading="lazy" class="w-full h-full object-cover opacity-90"><div class="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-lg text-xs border border-white/10">${JENIS[d.jenis]}${d.caption ? " · " + esc(d.caption) : ""}</div></div></div>`).join("")}
+ </div></section>`;
+      }
+
+      function render() {
+        $("list").innerHTML = DATA.length
+          ? DATA.map(card).join("")
+          : `<p class="text-center text-gray-500 pt-24">${admin ? 'Belum ada kegiatan. Klik "+ Tambah Kegiatan".' : "Belum ada kegiatan."}</p>`;
+        document
+          .querySelectorAll(".reveal:not(.active)")
+          .forEach((e) => io.observe(e));
+      }
+      async function load() {
+        const { data, error } = await db
+          .from("kegiatan")
+          .select("*")
+          .order("bulan", { ascending: true });
+        if (error) {
+          $("list").innerHTML =
+            `<p class="text-center text-red-400 pt-24">Gagal memuat: ${esc(error.message)}</p>`;
+          return;
+        }
+        DATA = data;
+        render();
+      }
+
+      function openForm(id) {
+        editing = id || null;
+        removed = [];
+        const k = id
+          ? DATA.find((x) => x.id === id)
+          : { bulan: "", judul: "", deskripsi: "", tags: [], dokumentasi: [] };
+        $("fBulan").value = k.bulan;
+        $("fJudul").value = k.judul;
+        $("fDesk").value = k.deskripsi;
+        $("fTags").value = (k.tags || []).join(", ");
+        FD = (k.dokumentasi || []).map((d) => ({ ...d }));
+        drawFD();
+        $("fMsg").textContent = "";
+        showM("formModal");
+      }
+      function drawFD() {
+        $("fDocs").innerHTML = FD.map(
+          (d, i) =>
+            `<div class="flex gap-3 items-center glass-card p-2"><img src="${esc(d.preview || d.url)}" class="w-16 h-16 object-cover rounded-lg"><div class="flex-1 space-y-1"><select class="inp" onchange="FD[${i}].jenis=this.value">${Object.entries(
+              JENIS,
+            )
+              .map(
+                ([v, l]) =>
+                  `<option value="${v}" ${d.jenis === v ? "selected" : ""}>${l}</option>`,
+              )
+              .join(
+                "",
+              )}</select><input class="inp" placeholder="Caption" value="${esc(d.caption)}" oninput="FD[${i}].caption=this.value"></div><button type="button" onclick="rmFD(${i})" class="text-red-400 px-2">✕</button></div>`,
+        ).join("");
+      }
+      function rmFD(i) {
+        const d = FD.splice(i, 1)[0];
+        if (d.path) removed.push(d.path);
+        drawFD();
+      }
+      $("fFiles").onchange = (e) => {
+        [...e.target.files].forEach((f) =>
+          FD.push({
+            file: f,
+            preview: URL.createObjectURL(f),
+            jenis: "lapangan",
+            caption: "",
+          }),
+        );
+        e.target.value = "";
+        drawFD();
+      };
+      const shrink = (f) =>
+        new Promise((r) => {
+          const im = new Image();
+          im.onload = () => {
+            const s = Math.min(1, 1600 / Math.max(im.width, im.height)),
+              c = document.createElement("canvas");
+            c.width = im.width * s;
+            c.height = im.height * s;
+            c.getContext("2d").drawImage(im, 0, 0, c.width, c.height);
+            c.toBlob(r, "image/jpeg", 0.82);
+          };
+          im.src = URL.createObjectURL(f);
+        });
+      const msg = (t, bad) => {
+        $("fMsg").textContent = t;
+        $("fMsg").className =
+          "text-xs " + (bad ? "text-red-400" : "text-cyan-400");
+      };
+
+      $("kForm").onsubmit = async (e) => {
+        e.preventDefault();
+        $("fSave").disabled = true;
+        msg("Menyimpan…");
+        try {
+          const docs = [];
+          for (const d of FD) {
+            if (d.file) {
+              const b = await shrink(d.file),
+                p = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.jpg`;
+              const { error } = await db.storage
+                .from("dokumentasi")
+                .upload(p, b, { contentType: "image/jpeg" });
+              if (error) throw error;
+              docs.push({
+                url: db.storage.from("dokumentasi").getPublicUrl(p).data
+                  .publicUrl,
+                path: p,
+                jenis: d.jenis,
+                caption: d.caption,
+              });
+            } else
+              docs.push({
+                url: d.url,
+                path: d.path,
+                jenis: d.jenis,
+                caption: d.caption,
+              });
+          }
+          const row = {
+            bulan: $("fBulan").value,
+            judul: $("fJudul").value.trim(),
+            deskripsi: $("fDesk").value.trim(),
+            tags: $("fTags")
+              .value.split(",")
+              .map((s) => s.trim())
+              .filter(Boolean),
+            dokumentasi: docs,
+          };
+          const { error } = await (editing
+            ? db.from("kegiatan").update(row).eq("id", editing)
+            : db.from("kegiatan").insert(row));
+          if (error) throw error;
+          if (removed.length)
+            await db.storage.from("dokumentasi").remove(removed);
+          hideM("formModal");
+          await load();
+        } catch (err) {
+          msg("Gagal: " + err.message, 1);
+        } finally {
+          $("fSave").disabled = false;
+        }
+      };
+      async function del(id) {
+        if (!confirm("Hapus kegiatan ini beserta fotonya?")) return;
+        const ps = (DATA.find((x) => x.id === id).dokumentasi || [])
+          .map((d) => d.path)
+          .filter(Boolean);
+        if (ps.length) await db.storage.from("dokumentasi").remove(ps);
+        await db.from("kegiatan").delete().eq("id", id);
+        load();
+      }
+      $("loginForm").onsubmit = async (e) => {
+        e.preventDefault();
+        const { error } = await db.auth.signInWithPassword({
+          email: $("lEmail").value,
+          password: $("lPass").value,
+        });
+        if (error) $("lMsg").textContent = "Login gagal: " + error.message;
+        else hideM("loginModal");
+      };
+
+      if (READY) {
+        db.auth.onAuthStateChange((_, s) => {
+          admin = !!s;
+          $("adminBar").classList.toggle("hidden", !admin);
+          $("btnLogin").classList.toggle("hidden", admin);
+          render();
+        });
+        load();
+      } else
+        $("list").innerHTML =
+          '<p class="text-center text-yellow-400 pt-24">Isi SUPABASE_URL dan SUPABASE_KEY di HR-index.html dulu.</p>';
+    </script>
+  </body>
+</html>

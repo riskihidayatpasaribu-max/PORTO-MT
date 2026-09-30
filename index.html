@@ -310,8 +310,8 @@
 
     <script>
       // ====== ISI 2 BARIS INI (dari Supabase → Project Settings → API) ======
-      const SUPABASE_URL = "ISI_URL_SUPABASE",
-        SUPABASE_KEY = "ISI_ANON_PUBLIC_KEY";
+      const SUPABASE_URL = "https://mcpafjladfqkbjdlkpgs.supabase.co",
+        SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1jcGFmamxhZGZxa2JqZGxrcGdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA3MTk0MjMsImV4cCI6MjEwNjI5NTQyM30.k1YLrgGZ2FDH4pNc8DoWOAf5N9CtURctJPxzvgVXr2I";
       // ======================================================================
       const READY = !SUPABASE_URL.startsWith("ISI"),
         db = READY ? supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
